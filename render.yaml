@@ -25,10 +25,7 @@ services:
     staticPublishPath: ./dist
     envVars:
       - key: VITE_API_URL
-        fromService:
-          type: web
-          name: pulsewatch-backend
-          property: host
+        value: https://pulsewatch-backend-xqa3.onrender.com
     routes:
       - type: rewrite
         source: /*

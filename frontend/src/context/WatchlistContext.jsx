@@ -28,6 +28,10 @@ export const WatchlistProvider = ({ children }) => {
 
   useEffect(() => {
     loadWatchlists();
+    const safetyTimer = setTimeout(() => {
+      setLoading(false);
+    }, 4000);
+    return () => clearTimeout(safetyTimer);
   }, []);
 
   useEffect(() => {
@@ -43,12 +47,17 @@ export const WatchlistProvider = ({ children }) => {
   const loadWatchlists = async () => {
     try {
       const data = await api.getWatchlists();
-      setWatchlists(data);
-      if (data.length > 0 && !activeWatchlistId) {
-        setActiveWatchlistId(data[0].id);
+      if (Array.isArray(data) && data.length > 0) {
+        setWatchlists(data);
+        if (!activeWatchlistId) {
+          setActiveWatchlistId(data[0].id);
+        }
+      } else {
+        setLoading(false);
       }
     } catch (e) {
-      console.error(e);
+      console.error('Watchlist fetch error:', e);
+      setLoading(false);
     }
   };
 

@@ -7,10 +7,14 @@ const wsProtocol = isHttps ? 'wss:' : 'ws:';
 
 const formatUrl = (url, defaultProto) => {
   if (!url) return null;
-  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('ws://') || url.startsWith('wss://')) {
-    return url;
+  let cleaned = String(url).trim();
+  if (cleaned.startsWith('http://') || cleaned.startsWith('https://') || cleaned.startsWith('ws://') || cleaned.startsWith('wss://')) {
+    return cleaned;
   }
-  return `${defaultProto}://${url}`;
+  if (!cleaned.includes('.') && !cleaned.includes('localhost')) {
+    cleaned = `${cleaned}.onrender.com`;
+  }
+  return `${defaultProto}://${cleaned}`;
 };
 
 export const API_BASE = formatUrl(rawEnvApi, isHttps ? 'https' : 'http')
