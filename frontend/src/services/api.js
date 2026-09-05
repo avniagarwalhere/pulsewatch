@@ -1,5 +1,14 @@
-const API_BASE = 'http://localhost:8000/api';
-export const WS_BASE = 'ws://localhost:8000/ws';
+const isHttps = typeof window !== 'undefined' && window.location.protocol === 'https:';
+const host = typeof window !== 'undefined' ? window.location.host : 'localhost:3000';
+const wsProtocol = isHttps ? 'wss:' : 'ws:';
+
+export const API_BASE = typeof window !== 'undefined' 
+  ? `${window.location.origin}/api` 
+  : 'http://localhost:8000/api';
+
+export const WS_BASE = typeof window !== 'undefined'
+  ? `${wsProtocol}//${host}/ws`
+  : 'ws://localhost:8000/ws';
 
 export const api = {
   getWatchlists: () => fetch(`${API_BASE}/watchlists`).then(r => r.json()),

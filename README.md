@@ -1,118 +1,83 @@
 # ⚡ PulseWatch — Real-Time Intelligent Market Watchlist & AI Terminal
 
-An institutional-grade, real-time stock market intelligence platform prioritizing the **Indian Stock Market (NSE/BSE)** and **US Equities**, featuring a quantitative **Significance Score Engine (ATR z-scores, volume surges, technical breakout detection)**, **AI-generated morning briefs**, **real-time WebSocket feeds**, and **interactive TradingView charts**.
+> **Live Public URL (Cloudflare):** [https://brain-complications-conversation-operation.trycloudflare.com](https://brain-complications-conversation-operation.trycloudflare.com)  
+> *Click above to explore the live running platform on any device without installing anything!*
 
 ---
 
-## 🌟 Key Features
+## 👋 Hey there! Welcome to PulseWatch
 
-1. **🇮🇳 Indian-First Market Universe & Global Coverage**
-   - **44+ Indian Equities** (Reliance, TCS, HDFC Bank, Infosys, ICICI Bank, Bharti Airtel, SBI, L&T, ITC, Hindustan Unilever, Axis Bank, Bajaj Finance, Maruti Suzuki, Sun Pharma, Tata Motors, Kotak Bank, Adani Enterprises, Titan, NTPC, Power Grid, Trent, BEL, HAL, Varun Beverages, Zomato, etc.).
-   - **17+ US Tech & Broad Market Leaders** (NVIDIA, Apple, Microsoft, Amazon, Google, Meta, Tesla, Broadcom, Eli Lilly, Berkshire Hathaway, JPMorgan, AMD, Palantir, Coinbase, Netflix, SPY, QQQ).
-   - Real-time market indices: **NIFTY 50**, **SENSEX**, and **S&P 500** with live sparklines.
+Most financial dashboards and trading apps are either too noisy or too sluggish. You open a finance app and get bombarded with dozens of flashing push notifications, half of which are tiny 0.2% price wiggles. Or worse, if you trade Indian markets, the tools feel outdated and lack institutional-grade signal detection.
 
-2. **💡 Quantitative & Dynamic Recommendations**
-   - Live AI recommendations placed directly with your active watchlist.
-   - Calculates correlation with your portfolio, volume breakouts, and relative strength momentum.
-   - Shows rationale tags (*Volume Breakout: 2.4x*, *Correlated with Core Holdings*, *Momentum Leader*) and match confidence.
-   - One-click **"+ Add"** button to immediately save to any watchlist.
-
-3. **🧠 AI Market Digest & Signal Feed**
-   - Automated natural language **Morning Brief** that synthesizes live market breadth, index movements, top sector gainers, and anomaly alerts.
-   - Statistical conviction classification (*high_signal* vs. *watch* vs. *noise*) preventing information overload.
-   - One-click **"🔄 Refresh Live Analysis"** for instant on-demand AI market intelligence.
-
-4. **⚡ Real-Time Streaming & Calm UI**
-   - Sub-second WebSocket streaming updates across all 60+ equities and indices.
-   - Micro-animations: real-time green/red price flash cells, responsive SVG sparklines, and active live indicators.
-   - Instant full-screen **TradingView Advanced Real-Time Charts** with technical indicators.
-   - Complete Light / Dark theme system with keyboard shortcuts (`Cmd+K` global stock search).
-
-5. **🐳 Enterprise Docker Architecture**
-   - Multi-container architecture: **PostgreSQL 15**, **Redis 7**, **FastAPI Python 3.12 Backend**, and **Nginx React 18 Production Frontend**.
-   - One-command deployment with automated 10/10 integration verification suite.
+I built **PulseWatch** to fix that. It's a calm, fast, and thoughtful market terminal built for both **Indian equities (NSE/BSE)** and **US markets**. Instead of treating every tick as an emergency, PulseWatch only raises an eyebrow when a move is statistically abnormal.
 
 ---
 
-## 🏗️ Architecture
+## ✨ What Makes PulseWatch Different
 
-```
-                       ┌──────────────────────────────────────┐
-                       │   React 18 + Tailwind SPA (Nginx)    │
-                       │   Port: 3000 (Vite Production Build) │
-                       └──────────────┬───────────────────────┘
-                                      │ HTTP / WebSocket
-                                      ▼
-                       ┌──────────────────────────────────────┐
-                       │      FastAPI Python 3.12 Backend     │
-                       │             Port: 8000               │
-                       └──────────────┬───────────────────────┘
-                                      │
-            ┌─────────────────────────┼─────────────────────────┐
-            │                         │                         │
-            ▼                         ▼                         ▼
-┌───────────────────────┐ ┌───────────────────────┐ ┌───────────────────────┐
-│     PostgreSQL 15     │ │        Redis 7        │ │  Yahoo / AlphaVantage │
-│  Multi-Watchlist DB   │ │   Cache & Event Queue │ │     Market Feeds      │
-└───────────────────────┘ └───────────────────────┘ └───────────────────────┘
-```
+- **🇮🇳 Built for Indian Markets First**: We track 44+ top Indian companies (Reliance, TCS, HDFC Bank, Infosys, Zomato, Tata Motors, L&T, etc.) along with NIFTY 50 and SENSEX with sub-second live price updates, ₹ currency formatting, and live sparkline graphs.
+- **🇺🇸 Seamless US Market Tracking**: One-click toggle over to 17+ US tech and broad market leaders (NVIDIA, Apple, Microsoft, Tesla, Amazon, Google, S&P 500, QQQ).
+- **💡 Smart, Quiet Recommendations**: Right underneath your watchlist table, PulseWatch highlights the top 3 high-conviction breakout stocks. It analyzes live volume surges, portfolio correlation, and momentum so you discover opportunities without hunting for them.
+- **🧠 Morning Brief that Actually Makes Sense**: An automated AI summary that explains *why* the market moved in plain English—no robotic jargon or fluff.
+- **📈 Real-Time TradingView Charts**: Click any stock to pull up live interactive candlestick charts with volume bars, technical indicators, and sector breakdown.
+- **🌓 Calm UI Design**: Handcrafted light and dark themes, keyboard shortcut navigation (`Cmd+K`), and smooth micro-animations.
 
 ---
 
-## 🚀 Quick Start & Deployment Instructions
+## 🏗️ How It's Built
 
-### Prerequisites
-- [Docker](https://www.docker.com/) & Docker Compose (or Python 3.11+ and Node.js 18+)
+- **Frontend**: React 18 with Vite, styled with Tailwind CSS, Recharts for lightweight SVG sparklines, and TradingView for interactive technical charting.
+- **Backend**: FastAPI (Python 3.12) running asynchronous WebSockets for sub-second quote delivery.
+- **Data Engine**: A statistical Significance Score engine calculating ATR z-scores, volume surges (RVOL), and 52-week level crossings.
+- **Database & Queue**: PostgreSQL 15 for multi-watchlist persistence and Redis 7 for high-speed caching.
+- **Deployment**: Docker Compose with Nginx reverse proxy, globally served through Cloudflare.
 
-### Method 1: One-Command Enterprise Docker Deployment (Recommended)
-Clone the repository and run the automated deployment script:
+---
+
+## 🚀 How to Run It Yourself
+
+### Option 1: Just click the live link!
+No setup needed. Just visit:  
+👉 **[https://brain-complications-conversation-operation.trycloudflare.com](https://brain-complications-conversation-operation.trycloudflare.com)**
+
+---
+
+### Option 2: 1-Command Docker Deployment (Local)
+If you have Docker Desktop running, clone and launch:
 ```bash
 git clone https://github.com/Avniagarwal120/pulsewatch.git
 cd pulsewatch
 ./deploy.sh
 ```
+`./deploy.sh` automatically spins up the database, cache, backend, and frontend containers, seeds 44 Indian and 17 US stocks, and runs a 10-point test suite to confirm everything is healthy.
 
-`deploy.sh` automatically:
-1. Builds the production Docker containers for PostgreSQL, Redis, Backend, and Frontend.
-2. Initializes the database schema and seeds 44 Indian stocks, 17 US stocks, and 20 core holdings.
-3. Runs an automated 10-point end-to-end verification suite across all APIs and WebSockets.
-
-**Live Application:** Open [http://localhost:3000](http://localhost:3000)  
-**Interactive API Docs:** Open [http://localhost:8000/docs](http://localhost:8000/docs)
+- App: [http://localhost:3000](http://localhost:3000)
+- Interactive API Docs: [http://localhost:8000/docs](http://localhost:8000/docs)
 
 ---
 
-### Method 2: Local Development Setup
+### Option 3: Manual Local Development
 
-#### 1. Backend Setup
-```bash
-cd backend
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
-```
+1. **Backend**:
+   ```bash
+   cd backend
+   python3 -m venv venv
+   source venv/bin/activate
+   pip install -r requirements.txt
+   uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+   ```
 
-#### 2. Frontend Setup
-```bash
-cd frontend
-npm install
-npm run dev -- --port 3000
-```
-
-Open [http://localhost:3000](http://localhost:3000) in your browser.
-
----
-
-## 🛠️ Tech Stack
-
-* **Frontend**: React 18, Vite, Tailwind CSS, Recharts, Lucide Icons, TradingView Technical Charts
-* **Backend**: FastAPI (Python 3.12), SQLAlchemy, Uvicorn, WebSockets, Pydantic v2
-* **Database & Cache**: PostgreSQL 15, Redis 7 (with SQLite automatic fallback for dev)
-* **AI & Quant Layer**: Significance Score Engine (ATR z-scores, RVOL, 52-week level crossings), Claude / LLM Market Brief synthesis
-* **DevOps**: Docker, Docker Compose, Nginx, Automated bash verification suite
+2. **Frontend**:
+   ```bash
+   cd frontend
+   npm install
+   npm run dev -- --port 3000
+   ```
+   Visit [http://localhost:3000](http://localhost:3000) in your browser!
 
 ---
 
-## 👥 Author
-Created with ❤️ by **Avni Agarwal** ([Avniagarwal120@gmail.com](mailto:Avniagarwal120@gmail.com))
+## 👩‍💻 Created By
+**Avni Agarwal**  
+Email: [Avniagarwal120@gmail.com](mailto:Avniagarwal120@gmail.com)  
+GitHub: [https://github.com/Avniagarwal120](https://github.com/Avniagarwal120)
