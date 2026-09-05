@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+*/node_modules/
+venv/
+*/venv/
+
+# Build outputs
+dist/
+build/
+*.egg-info/
+
+# Databases
+*.db
+*.db-shm
+*.db-wal
+
+# Python caches
+__pycache__/
+*/__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Logs & temp
+*.log
+.DS_Store
+*.zip
