@@ -1,14 +1,28 @@
+const rawEnvApi = typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_API_URL;
+const rawEnvWs = typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_WS_URL;
+
 const isHttps = typeof window !== 'undefined' && window.location.protocol === 'https:';
 const host = typeof window !== 'undefined' ? window.location.host : 'localhost:3000';
 const wsProtocol = isHttps ? 'wss:' : 'ws:';
 
-export const API_BASE = typeof window !== 'undefined' 
-  ? `${window.location.origin}/api` 
-  : 'http://localhost:8000/api';
+const formatUrl = (url, defaultProto) => {
+  if (!url) return null;
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('ws://') || url.startsWith('wss://')) {
+    return url;
+  }
+  return `${defaultProto}://${url}`;
+};
 
-export const WS_BASE = typeof window !== 'undefined'
-  ? `${wsProtocol}//${host}/ws`
-  : 'ws://localhost:8000/ws';
+export const API_BASE = formatUrl(rawEnvApi, isHttps ? 'https' : 'http')
+  ? `${formatUrl(rawEnvApi, isHttps ? 'https' : 'http')}/api`
+  : (typeof window !== 'undefined' ? `${window.location.origin}/api` : 'http://localhost:8000/api');
+
+export const WS_BASE = formatUrl(rawEnvWs, wsProtocol)
+  ? `${formatUrl(rawEnvWs, wsProtocol)}/ws`
+  : (rawEnvApi 
+      ? `${formatUrl(rawEnvApi, wsProtocol)}/ws` 
+      : (typeof window !== 'undefined' ? `${wsProtocol}//${host}/ws` : 'ws://localhost:8000/ws'));
+
 
 export const api = {
   getWatchlists: () => fetch(`${API_BASE}/watchlists`).then(r => r.json()),
