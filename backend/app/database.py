@@ -7,9 +7,13 @@ load_dotenv()
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
+if DATABASE_URL and DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+
 if not DATABASE_URL:
     DB_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'pulsewatch.db')
     DATABASE_URL = f'sqlite:///{DB_PATH}'
+
 
 connect_args = {}
 if DATABASE_URL.startswith("sqlite"):
